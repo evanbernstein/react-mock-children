@@ -1,0 +1,43 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:best-practices"],
+  "description": "Weekly dependency updates, held for 3 days after release (npm allows unpublishing within 72 hours, and a brand-new release is the riskiest supply-chain window), then automerged once CI passes. platformAutomerge is on because this public repo's branch protection requires CI.",
+  "minimumReleaseAge": "3 days",
+  "schedule": ["after 12pm on Friday"],
+  "timezone": "America/New_York",
+  "labels": ["dependencies", "{{categories}}", "{{updateType}}"],
+  "automerge": true,
+  "automergeType": "pr",
+  "platformAutomerge": true,
+  "packageRules": [
+    {
+      "description": "Group non-major updates of stable (>=1.0.0) packages into one weekly PR.",
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchCurrentVersion": ">=1.0.0",
+      "groupName": "stable dependencies (non-major)",
+      "groupSlug": "stable-non-major"
+    },
+    {
+      "description": "Group pin and digest updates into one PR.",
+      "matchUpdateTypes": ["pin", "digest"],
+      "groupName": "pin and digest updates",
+      "groupSlug": "pin-digest"
+    },
+    {
+      "description": "Pin devDependencies to exact versions for reproducible builds.",
+      "matchDepTypes": ["devDependencies"],
+      "rangeStrategy": "pin"
+    },
+    {
+      "description": "This is a library, so peer ranges widen to admit new majors instead of pinning, which would force consumers onto one version.",
+      "matchDepTypes": ["peerDependencies"],
+      "rangeStrategy": "widen"
+    },
+    {
+      "description": "Widening a peer range to a new major changes what consumers must support, so a human reviews it.",
+      "matchDepTypes": ["peerDependencies"],
+      "matchUpdateTypes": ["major"],
+      "automerge": false
+    }
+  ]
+}
