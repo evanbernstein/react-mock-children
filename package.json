@@ -1,0 +1,33 @@
+{
+  "name": "react-mock-children",
+  "version": "0.0.0",
+  "description": "Unit-test a React component with its children mocked, and assert on the exact props it passes them.",
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "bun@1.3.6",
+  "scripts": {
+    "test": "vitest run",
+    "check-types": "tsc --noEmit",
+    "lint": "biome check .",
+    "all-tests": "bun run check-types && bun run test && bun run lint"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.8",
+    "@testing-library/dom": "10.4.2",
+    "@testing-library/react": "16.3.3",
+    "@testing-library/user-event": "14.6.13",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "jsdom": "31.0.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "typescript": "7.0.2",
+    "vitest": "5.1.1"
+  },
+  "peerDependencies": {
+    "@testing-library/react": "^16",
+    "@testing-library/user-event": "^14",
+    "react": "^19",
+    "vitest": "^4 || ^5"
+  }
+}
